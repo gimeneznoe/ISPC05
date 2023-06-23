@@ -1,7 +1,8 @@
 
-##Aca empieza el de silvana
+# Silvana
 
 import sqlite3
+
 
 class Normativa:
     def __init__(self, id_normativa, tipo_normativa, nro_normativa, fecha, nombre, descripcion, categoria, jurisdiccion, organo_legislativo, palabras_clave):
@@ -26,14 +27,27 @@ class NormativaManager:
 
     def close_connection(self):
         if self.connection:
-           self.connection.close() 
-            
-     # Aca empieza el de nahir
-    
-    def select_normativas(self):
+            self.connection.close()
 
+# Nombre del commit: Definicion de clases
+# Descripcion del commit: Definimos las clases principales del programa.
+
+# Nahir
+
+    def select_normativas(self):
         cursor = self.connection.cursor()
-        cursor.execute("""SELECT * FROM Normativa """)
+        cursor.execute("""
+            SELECT *
+            FROM Normativa
+        """)
+        normativas_data = cursor.fetchall()
+
+
+        if normativas_data:
+            normativas = []
+            for normativa_data in normativas_data:
+                normativa = Normativa(*normativa_data)
+                normativas.append(normativa)
             print("\033[;36m"+"="*110)
             print("Normativas: ")
             print("")
@@ -51,8 +65,11 @@ class NormativaManager:
                 print("-"*110)
         else:
             print("\033[;31m"+"No hay normativas registradas.")
-            
-## Aca empieza lo de noe
+
+# Nombre del commit: Seleccion
+# Descripcion del commit: Definimos el menu principal de la seleccion de normativas
+
+#Noe
 
     def insert_normativa(self, tipo_normativa, nro_normativa, fecha, nombre, descripcion, categoria, jurisdiccion, organo_legislativo, palabras_clave):
         cursor = self.connection.cursor()
@@ -65,7 +82,7 @@ class NormativaManager:
 
 
     def update_normativa(self, normativa_id):
-       cursor = self.connection.cursor()
+        cursor = self.connection.cursor()
         cursor.execute("""
             SELECT *
             FROM Normativa
@@ -99,8 +116,11 @@ class NormativaManager:
         else:
             print("\033[;31m" +
                   "No se encontró la normativa con el ID especificado.")
-            
-#Aca se puse lo de agustin
+
+# Nombre del commit: Insertar/Actualizar
+# Descripcion del commit: Se insertan o actualizan las normativas existentes
+
+#Agustin
 
     def delete_normativa(self, normativa_id):
         cursor = self.connection.cursor()
@@ -121,7 +141,8 @@ class NormativaManager:
             cursor.execute(f"""
                 SELECT *
                 FROM Normativa
-                WHERE NroNormativa= {numero_normativa}""")
+                WHERE NroNormativa= {numero_normativa}
+            """)
 
         else:
             palabras_clave = input(
@@ -131,9 +152,12 @@ class NormativaManager:
                 FROM Normativa
                 WHERE PalabrasClave LIKE ?
             """, ('%' + palabras_clave + '%',))
-            
-       ##aca comienza el de milton 
-      
+
+# Nombre del commit: Borrar/Consultar
+# Descripcion del commit: Se borran o consultan las normativas existentes.
+
+#Milton
+
         normativas_data = cursor.fetchall()
 
         if normativas_data:
@@ -158,8 +182,8 @@ class NormativaManager:
         else:
             print("\033[;31m"+"No se encontraron normativas especificadas.")
 
-        def run(self):
-          self.open_connection()
+    def run(self):
+        self.open_connection()
 
         while True:
             print("\x1b[1;33m"+"\n=== GESTIÓN DE NORMATIVAS ===")
@@ -170,10 +194,12 @@ class NormativaManager:
             print("4. Eliminar una normativa existente")
             print("5. Buscar normativas ")
             print("0. Salir")
-            
-           
-          ##aca empieza el de flor
-          
+
+# Nombre del commit: Reinsercion 
+# Descripcion del commit: Se busca reinsertar las opciones, en el caso de que sean incorrectas
+
+#Florencia
+
             opcion = input(
                 "Ingrese el número de la opción deseada: "+"\33[0;m")
 
@@ -218,4 +244,8 @@ class NormativaManager:
 # Crear una instancia de NormativaManager y ejecutar el programa
 normativa_manager = NormativaManager("normativas")
 normativa_manager.run()
+
+# Nombre del commit: Comandos/Cargar
+# Descripcion del commit: Se asignan los comandos (Por numeros), y se carga la base de datos con la que trabaja el programa.
+
 
