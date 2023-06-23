@@ -13,3 +13,16 @@ class Normativa:
         self.jurisdiccion = jurisdiccion
         self.organo_legislativo = organo_legislativo
         self.palabras_clave = palabras_clave
+
+class NormativaManager:
+    def __init__(self, db_file):
+        self.db_file = db_file
+        self.connection = None
+
+    def open_connection(self):
+        self.connection = sqlite3.connect(self.db_file)
+
+    def close_connection(self):
+        if self.connection:
+            self.connection.close()
+
